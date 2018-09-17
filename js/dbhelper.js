@@ -1,6 +1,9 @@
 /**
  * Common database helper functions.
  */
+
+
+
 class DBHelper {
 
   /**
@@ -15,16 +18,23 @@ class DBHelper {
   /**
    * Fetch all restaurants.
    */
+
   static fetchRestaurants(callback) {
     let xhr = new XMLHttpRequest();
+    //TODO: Here first check if the url is in the cache. If not, add it to the cache and proceed.
     xhr.open('GET', DBHelper.DATABASE_URL);
     xhr.onload = () => {
       if (xhr.status === 200) { // Got a success response from server!
+        console.log('Got a success response from server')
         const json = JSON.parse(xhr.responseText);
         const restaurants = json.restaurants;
+        //cache.put(DBHelper.DATABASE_URL,response);
         callback(null, restaurants);
       } else { // Oops!. Got an error from server.
         const error = (`Request failed. Returned status of ${xhr.status}`);
+        //return caches.open('restaurant-review-v1').then(function(cache){
+          //return cache.match(DBHelper.DATABASE_URL);
+        //});
         callback(error, null);
       }
     };
